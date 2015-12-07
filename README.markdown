@@ -21,6 +21,9 @@ Usage
       Measure runtime of a command. Return statistical data.
 
     Options:
-      -s, --batch-size INTEGER  How many tests should be run per batch
-      -b, --batches INTEGER     How many batches of tests to run
-      --help                    Show this message and exit.
+      -s, --batch-size INTEGER        How many tests should be run per batch
+      -b, --batches INTEGER           How many batches of tests to run
+      --suppress-stdout / --no-suppress-stdout
+                                      Redirect stdout from subprocesses to a byte
+                                      sink.
+      --help                          Show this message and exit.
