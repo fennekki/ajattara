@@ -41,9 +41,11 @@ class Ajattara(object):
               help="How many tests should be run per batch")
 @click.option("-b", "--batches", default=1000,
               help="How many batches of tests to run")
+@click.option("--suppress-stdout/--no-suppress-stdout", default=True,
+              help="Redirect stdout from subprocesses to a byte sink.")
 @click.argument("command")
 @click.argument("arg", nargs=-1)
-def run_program(batch_size, batches, command, arg):
+def run_program(batch_size, batches, command, suppress_stdout, arg):
     """Run a command given on the command line.
 
     Arguments are parsed from the following list.
@@ -53,9 +55,13 @@ def run_program(batch_size, batches, command, arg):
     arguments.extend(arg)
 
     with open(devnull, "w") as nullfile:
+        if not suppress_stdout:
+            progr_stdout = None
+        else:
+            progr_stdout = nullfile
         a = Ajattara(batch_count=batches, batch_size=batch_size,
                      function=subprocess.call,
-                     kwargs={"args": arguments, "stdout": nullfile})
+                     kwargs={"args": arguments, "stdout": progr_stdout})
         # Run and do analysis
         results = a.run()
         click.echo("{} batches of {} runs".format(batches, batch_size))
