@@ -19,11 +19,13 @@ Usage
     Usage: ajattara [OPTIONS] COMMAND [ARG]...
 
       Measure runtime of a command. Return statistical data.
-
+    
     Options:
       -s, --batch-size INTEGER        How many tests should be run per batch
       -b, --batches INTEGER           How many batches of tests to run
       --suppress-stdout / --no-suppress-stdout
                                       Redirect stdout from subprocesses to a byte
                                       sink.
+      -o, --outfile PATH              Output run times to given file, one time per
+                                      line
       --help                          Show this message and exit.
