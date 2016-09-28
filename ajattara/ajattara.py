@@ -43,9 +43,11 @@ class Ajattara(object):
               help="How many batches of tests to run")
 @click.option("--suppress-stdout/--no-suppress-stdout", default=True,
               help="Redirect stdout from subprocesses to a byte sink.")
+@click.option("-o", "--outfile", default=None, type=click.Path(),
+              help="Output run times to given file, one time per line")
 @click.argument("command")
 @click.argument("arg", nargs=-1)
-def run_program(batch_size, batches, command, suppress_stdout, arg):
+def run_program(batch_size, batches, command, suppress_stdout, outfile, arg):
     """Run a command given on the command line.
 
     Arguments are parsed from the following list.
@@ -64,6 +66,10 @@ def run_program(batch_size, batches, command, suppress_stdout, arg):
                      kwargs={"args": arguments, "stdout": progr_stdout})
         # Run and do analysis
         results = a.run()
+        if outfile is not None:
+            with open(outfile, 'w') as f:
+                f.writelines(("{}\n".format(num) for num in results))
+
         click.echo("{} batches of {} runs".format(batches, batch_size))
         click.echo("mean {}s median {}s standard deviation {}"
                    .format(mean(results), median(results), stdev(results)))
