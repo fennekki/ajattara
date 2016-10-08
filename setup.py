@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Ajattara",
-    version="0.1.1",
+    version="0.2.0",
     description="For measuring the runtime of applications",
     url="https://github.com/fennekki/ajattara",
     author="fennekki",
